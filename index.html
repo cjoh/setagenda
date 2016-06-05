@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <body>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css">
+        <link rel="stylesheet" href="css/TimeCircles.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/TimeCircles.js"></script>
+    <style>
+    .timer {
+      color: #e0e0e0;
+      height: 300px;
+      align: center;
+    }
+    </style>
+    </head>
+
+    <body>
+        <div class="reveal">
+            <div class="center"><div class="timer center" data-timer="3600"></div></div>
+            <div id="slides" class="slides">
+              <section data-timer="3600"><h1>Welcome</h1></section>
+            </div>
+        </div>
+    <script type="text/javascript" src="/js/tabletop.js"></script>
+    <script type="text/javascript" src="/js/reveal.js"></script>
+ 
+        <script src="js/reveal.js"></script>
+<script>
+
+            $(".timer").TimeCircles({ circle_bg_color: "#ffffff", time: {
+        Days: { show: false },
+        Hours: { show: false },
+        Minutes: { text: '', color: '#d3d3d3', show: true },
+        Seconds: { text: '', color: '#e0e0e0', show: true }
+    }});
+
+
+</script>
+   <script type="text/javascript">
+      window.onload = function() { init() };
+
+      var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1sQ1B1ffiwhETgQsLkHUSEwR-riM-Nfn-Bx0dfPvfHBg/pubhtml';
+
+      function init() {
+        Tabletop.init( { key: public_spreadsheet_url,
+                         callback: showInfo,
+                         simpleSheet: true } );
+      }
+
+      function showInfo(data) {
+        var slides = "";
+        for (var index=0; index < data.length; ++index){
+          slides += "<section data-group=\"" + data[index].Owner + "\" data-timer=\""+ data[index].Duration * 60 +"\">" +
+                      "<h1>"+ data[index].Title + "</h1>" +
+                      "<p>" + data[index].Notes + "</p>" +
+                      '<div id="timer-' + index +"\" data-timer=\""+ data[index].Duration * 60 +"\"></div>" +
+                    "</section>";
+        }
+        $("#slides").append(slides);
+        Reveal.initialize();
+        Reveal.addEventListener( 'slidechanged', function( event ) {
+                $('.timer').data('timer',$(event.currentSlide).data('timer'));
+        $('.timer').TimeCircles().restart();
+        $('.group').html($(event.currentSlide).data('group'));
+        $('#itemtype').removeClass().addClass($(event.currentSlide).data('itemtype'));
+        } );
+      }
+
+      document.write("The published spreadsheet is located at <a target='_new' href='" + public_spreadsheet_url + "'>" + public_spreadsheet_url + "</a>");        
+    </script>
+  </body>
+</html>
