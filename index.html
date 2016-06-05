@@ -4,20 +4,22 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/reveal.css">
-        <link rel="stylesheet" href="css/theme/white.css">
+        <link rel="stylesheet" href="css/theme/simple.css">
         <link rel="stylesheet" href="css/TimeCircles.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/TimeCircles.js"></script>
     <style>
     .timer {
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
       color: #e0e0e0;
-      height: 300px;
-      align: center;
+      height: 200px;
       display: none;
     }
-    .form, .form input, .form button{
+    .form, .form input {
       font-size: 20pt;
-      display: block;
+      width: 60%;
       left: 0;
       right: 0;
       margin-left: auto;
@@ -27,7 +29,10 @@
     }
     .form {
       padding-top: 50px;
-      width: 600px;
+      width: 80%;
+    }
+    .form button {
+      font-size: 20pt;
     }
     .instructions {
       font-size: 14pt;
@@ -41,7 +46,7 @@
         <h1>Instructions</h1>
         <ol>
         <li>Make a Google Sheet with Column Names of "Duration", "Title","Notes", "Owner".</li>
-        <li>Click File, then Publish to Web (<a href="https://docs.google.com/spreadsheets/d/1sQ1B1ffiwhETgQsLkHUSEwR-riM-Nfn-Bx0dfPvfHBg/pubhtml">sample</a></li>
+        <li>Click File, then Publish to Web (<a href="https://docs.google.com/spreadsheets/d/1sQ1B1ffiwhETgQsLkHUSEwR-riM-Nfn-Bx0dfPvfHBg/pubhtml">sample</a>)</li>
         <li>Click Publish, and paste the URL in the Box Below</li>
         <li>Have a Well Run Meeting</li>
         </ol>
@@ -62,7 +67,7 @@
             $(".timer").TimeCircles({ circle_bg_color: "#ffffff", time: {
         Days: { show: false },
         Hours: { show: false },
-        Minutes: { text: '', color: '#d3d3d3', show: true },
+        Minutes: { text: 'Minutes', color: '#8696AB', show: true },
         Seconds: { text: '', color: '#e0e0e0', show: true }
     }});
 
@@ -85,8 +90,9 @@
           slides += "<section data-group=\"" + data[index].Owner + "\" data-timer=\""+ data[index].Duration * 60 +"\">" +
                       "<h1>"+ data[index].Title + "</h1>" +
                       "<p>" + data[index].Notes + "</p>" +
-                      '<div id="timer-' + index +"\" data-timer=\""+ data[index].Duration * 60 +"\"></div>" +
-                    "</section>";
+                      '<div id="timer-' + index +"\" data-timer=\""+ data[index].Duration * 60 +"\"></div>";
+            
+            slides += "</section>";
         }
         $("#slides").append(slides);
         Reveal.initialize();
