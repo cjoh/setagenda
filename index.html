@@ -13,11 +13,40 @@
       color: #e0e0e0;
       height: 300px;
       align: center;
+      display: none;
+    }
+    .form, .form input, .form button{
+      font-size: 20pt;
+      display: block;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: Verdana, Arial, Sans-serif;
+
+    }
+    .form {
+      padding-top: 50px;
+      width: 600px;
+    }
+    .instructions {
+      font-size: 14pt;
     }
     </style>
     </head>
 
     <body>
+        <div class="form">
+        <div class="instructions">
+        <h1>Instructions</h1>
+        <ol>
+        <li>Make a Google Sheet with Column Names of "Duration", "Title","Notes", "Owner"</li>
+        <li>Click File, then Publish to Web</li>
+        <li>Click Publish, and paste the URL in the Box Below</li>
+        <li>Have a Well Run Meeting</li>
+        </ol>
+        </div>
+        <input type="text" placeholder="Google Sheets URL" id="spreadsheet_url" name="url"><button onClick="init()">Start Presentation</button></div>
         <div class="reveal">
             <div class="center"><div class="timer center" data-timer="3600"></div></div>
             <div id="slides" class="slides">
@@ -40,14 +69,14 @@
 
 </script>
    <script type="text/javascript">
-      window.onload = function() { init() };
-
       var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1sQ1B1ffiwhETgQsLkHUSEwR-riM-Nfn-Bx0dfPvfHBg/pubhtml';
 
       function init() {
-        Tabletop.init( { key: public_spreadsheet_url,
+        Tabletop.init( { key: $("#spreadsheet_url").val(),
                          callback: showInfo,
                          simpleSheet: true } );
+        $('.timer').show();
+        $('.form').hide();
       }
 
       function showInfo(data) {
